@@ -5,9 +5,16 @@ import Chance from "chance";
 
 export const shortUrlsRouter = express.Router();
 
-shortUrlsRouter.get('/:id', async(req, res) => {
-    await ShortenUrl.findById(req.params.id);
-    res.status(301).redirect(req.body.originalUrl);
+shortUrlsRouter.get('/:shortUrl', async(req, res) => {
+    const shortUrl = await ShortenUrl.findOne({shortUrl: req.params.shortUrl});
+
+    if(shortUrl) {
+        res.status(301).redirect(shortUrl.originalUrl);
+    } else {
+        res.status(404).send({error: 'short url not found'})
+    }
+
+
 })
 
 shortUrlsRouter.post('/', async(req, res) => {
@@ -21,8 +28,8 @@ shortUrlsRouter.post('/', async(req, res) => {
 
     try {
         const shortUrl = new ShortenUrl(newShortenLink);
-        res.send(shortUrl)
-        await shortUrl.save()
+        await shortUrl.save();
+        res.send(shortUrl);
     } catch(e) {
         console.error(e)
     }
