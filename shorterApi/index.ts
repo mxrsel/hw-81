@@ -9,10 +9,10 @@ const port = 8000;
 
 app.use(cors());
 app.use(express.json());
-app.use('/shortUrl', shortUrlsRouter);
+app.use('/links', shortUrlsRouter);
 
 const run = async() => {
-   await mongoose.connect('mongodb://localhost/urlShorter');
+   await mongoose.connect('mongodb://localhost/links');
 
    app.listen(port, () => {
        console.log(`Server started on port: http://localhost:${port}`);

@@ -1,12 +1,11 @@
 import {Db, MongoClient} from'mongodb';
 
-
 let db: Db;
 let client: MongoClient;
 
 const connect = async() => {
     client = await MongoClient.connect('mongodb://localhost');
-    db = client.db('urlShorter');
+    db = client.db('links');
 };
 
 const disconnect = async() => {
@@ -16,7 +15,6 @@ const disconnect = async() => {
 const mongoDb = {
     connect,
     disconnect,
-    getDb: () => db
 };
 
 export default mongoDb
